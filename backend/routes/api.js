@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { Mistral } from "@mistralai/mistralai";
+import { createPrompt } from "./prompt.js";
 
 const router = Router();
 
@@ -15,10 +16,10 @@ router.get("/ping", (req, res) => {
 router.post("/ask", async (req, res) => {
   try {
     const { question } = req.body;
-    const translationRequest = `Translate to French (just strictly translate; no comment): ${question}`;
     if (!question) {
       return res.status(400).json({ error: "Question is required" });
     }
+    const translationRequest = createPrompt(question);
 
     const resp = await fetch("https://api.mistral.ai/v1/chat/completions", {
       method: "POST",
