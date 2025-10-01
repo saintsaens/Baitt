@@ -1,0 +1,23 @@
+{
+  "name": "baitt",
+  "version": "1.0.0",
+  "description": "Better AI Than Tx",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "@mistralai/mistralai": "^1.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
+  },
+  "type": "module"
+}
