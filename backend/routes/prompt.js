@@ -6,6 +6,7 @@ const baseInstructions = [
   "Translate in the most direct, simple way possible.",
   "Never use bold.",
   "Always use curved apostrophes (’), not straight apostrophes.",
+  "Always use nonbreakable spaces before question marks (?), colons (:), semicolons (;) and exclamation marks (!).",
 ];
 
 // Glossary as [source, target] pairs
@@ -17,6 +18,8 @@ const glossary = [
   ["score", "score"],
   ["published posts", "messages publiés"],
   ["coach", "animateur"],
+  ["platform admins", "administrateurs plateforme"],
+  ["project lead", "responsable de projet"],
 ];
 
 // Build glossary instructions automatically
