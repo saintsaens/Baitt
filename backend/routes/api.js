@@ -4,15 +4,6 @@ import { createPrompt } from "./prompt.js";
 
 const router = Router();
 
-// Create a client with API key from env
-const client = new Mistral({
-  apiKey: process.env.MISTRAL_API_KEY,
-});
-
-router.get("/ping", (req, res) => {
-  res.json({ message: "pong" });
-});
-
 router.post("/ask", async (req, res) => {
   try {
     const { question } = req.body;
