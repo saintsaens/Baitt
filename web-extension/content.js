@@ -22,24 +22,46 @@ if (window.location.href.startsWith(targetPrefix)) {
         // Core BAITT call function
         async function runBAITT() {
             try {
+                // Get source text
                 const sourceDiv = document.querySelector("#source-string");
-                const translatedDiv = document.querySelector("#translated-string");
-                if (!sourceDiv || !translatedDiv) {
-                    console.error("Source or translated string element not found");
+                if (!sourceDiv) {
+                    console.error("Source element not found");
+                    return;
+                }
+                const question = (sourceDiv.innerText || sourceDiv.textContent).trim();
+
+                // Get resource from link
+                const link = document.querySelector('a[original-title="View string in its resource of origin"]');
+                if (!link) {
+                    console.error("No matching resource link found");
+                    return;
+                }
+                const resourceMatch = link.href.match(/(HTML-articles-[^/]+)/);
+                const resource = resourceMatch ? resourceMatch[1] : null;
+                if (!resource) {
+                    console.error("Resource slug not found");
                     return;
                 }
 
-                const question = sourceDiv.innerText || sourceDiv.textContent;
-
+                // Get string hash
+                const labelDiv = Array.from(document.querySelectorAll('div'))
+                    .find(div => div.textContent.trim() === "String Hash");
+                const stringHash = labelDiv?.nextElementSibling?.textContent.trim() || null;
+                if (!stringHash) {
+                    console.error("String hash not found");
+                    return;
+                }
+                console.log(`Calling backend with resource=${resource} and stringHash=${stringHash} and question=${question}`);
+                // Call backend
                 const response = await fetch("http://localhost:3000/api/ask", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ question })
+                    body: JSON.stringify({ question, resource, stringHash })
                 });
 
                 const data = await response.json();
+                return data.answer;
 
-                translatedDiv.innerHTML = data.answer;
             } catch (err) {
                 console.error("Error calling backend:", err);
             }
